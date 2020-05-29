@@ -6,6 +6,7 @@
 #include <queue>
 #include <ctime>
 
+
 #include <omp.h>
 
 using namespace std;
@@ -19,12 +20,14 @@ namespace dist{
 )
     {
 
-	long b=0;
-  #pragma omp parallel for
-for(long a=0; a<10; a++)
-  for(long i=0; i<10000000; i++) {
-    for(long j=0; j<10000000; j++) {
-    	b += 0.00001;
+int num_threads = omp_get_num_procs();
+//omp_set_num_threads(4);
+cout<<"threads: "<<num_threads<<endl;
+
+  #pragma omp parallel for num_threads(2)
+  for(long i=0; i<2; i++) {
+    for(long j=0; j<100000000; j++) {
+    	long b = i+j;
   }
   }
 
